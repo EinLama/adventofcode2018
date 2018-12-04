@@ -45,7 +45,7 @@ class Guard
   end
 
   def sleepiest_minute()
-    @schedule.max_by { |minute, count| count }[0]
+    @schedule.max_by { |minute, count| count }
   end
 
   def start_shift!(time)
@@ -100,12 +100,15 @@ def sneak_in()
   end
 
   sleepy_guard = find_sleepy_guard(GUARDS)
-  best_minute = sleepy_guard.sleepiest_minute()
+  best_minute = sleepy_guard.sleepiest_minute()[0]
+
+  top_guard = GUARDS.max_by { |k, g| (g.sleepiest_minute() || [k,0])[1] }[1]
+  top_guard_best = top_guard.sleepiest_minute()[0]
 
   #GUARDS.each { |id, g| puts g }
 
   puts "####RESULT####"
-  [sleepy_guard, best_minute, sleepy_guard.id * best_minute]
+  [sleepy_guard, best_minute, sleepy_guard.id * best_minute, top_guard.id * top_guard_best]
 end
 
 puts sneak_in()
