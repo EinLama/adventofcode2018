@@ -28,23 +28,19 @@ def iterate(input)
 end
 
 def polymere()
-  pairs = []
-  (?a..?z).each do |c|
-    pairs << create_pair(c)
-  end
-
+  pairs = (?a..?z).map { |c| create_pair(c) }
   input = File.read("input05").chomp.split("")
 
-  lowest_score = 100_000
+  lowest_score = 100_000_000
 
-  pairs.each do |pair|
+  sizes = pairs.map do |pair|
     input_without_pair = input.reject {|c| pair.include?(c) }
     current_str = iterate(input_without_pair)
 
-    lowest_score = [current_str.size, lowest_score].min
+    current_str.size
   end
 
-  lowest_score
+  sizes.min
 end
 
 puts polymere()
