@@ -74,7 +74,7 @@ def overlap()
     world.place(rect)
   end
 
-  rects.find_all { |r| r.overlaps == false }
+  rects.find { |r| !r.overlaps }
 end
 
 puts overlap()
